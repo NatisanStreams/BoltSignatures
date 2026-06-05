@@ -1,0 +1,25 @@
+command /boltsignatures [<text>] [<offlineplayer>]:
+    aliases: bs, bsignatures
+    trigger:
+        if arg-1 is "reload":
+            if player has permission "boltsignatures.admin":
+                unload yaml "config"
+                load yaml {config} as "config"
+                save yaml "config"
+                if yaml "config" is loaded:
+                    send "<dark_gray>✦ <#B87333>BoltSignatures » <light_green>Config Reloaded" to player
+                    send "<dark_gray>✦ <#B87333>BoltSignatures » <light_green>Config Reloaded by <light_blue>%player%" to console
+        if arg-1 is "reloadplayer":
+            if player has permission "boltsignatures.admin":
+                if arg-2 is not set:
+                    send "<dark_gray>✦ <#B87333>BoltSignatures » <red>Please set a player"
+                    stop
+                if arg-2 is not online:
+                    send "<dark_gray>✦ <#B87333>BoltSignatures » <red>Player is not online"
+                    stop
+
+                set {_uuid} to arg-2's uuid
+                unload yaml "p-%{_uuid}%"
+                load yaml "plugins/BoltSignatures/playerdata/%{_uuid}%.yml" as "p-%{_uuid}%"
+                save yaml "p-%{_uuid}%"
+                send "<dark_gray>✦ <#B87333>BoltSignatures » <light_green>%arg-2%'s Playerdata reloaded successfully"
