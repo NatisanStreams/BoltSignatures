@@ -1,6 +1,8 @@
-command /boltsignatures [<text>] [<offlineplayer>]:
+command /boltsignatures [<text>] [<text>] [<text>] [<text>]:
     aliases: bs, bsignatures
     trigger:
+        set {_uuid} to player's uuid
+
         if arg-1 is "reload":
             if player has permission "boltsignatures.admin":
                 unload yaml "config"
@@ -10,16 +12,51 @@ command /boltsignatures [<text>] [<offlineplayer>]:
                     send "<dark_gray>✦ <#B87333>BoltSignatures » <light_green>Config Reloaded" to player
                     send "<dark_gray>✦ <#B87333>BoltSignatures » <light_green>Config Reloaded by <light_blue>%player%" to console
         if arg-1 is "reloadplayer":
-            if player has permission "boltsignatures.admin":
+            if player does not have permission "boltsignatures.admin":
+                send "<dark_gray>✦ <#B87333>BoltSignatures » <red>You don't have the required permission for that"
+                stop
+            else:
                 if arg-2 is not set:
                     send "<dark_gray>✦ <#B87333>BoltSignatures » <red>Please set a player"
                     stop
-                if arg-2 is not online:
+                set {_player} to arg-2 parsed as offlineplayer
+                if {_player} is not online:
                     send "<dark_gray>✦ <#B87333>BoltSignatures » <red>Player is not online"
                     stop
 
-                set {_uuid} to arg-2's uuid
+                set {_uuid} to {_player}'s uuid
                 unload yaml "p-%{_uuid}%"
                 load yaml "plugins/BoltSignatures/playerdata/%{_uuid}%.yml" as "p-%{_uuid}%"
                 save yaml "p-%{_uuid}%"
                 send "<dark_gray>✦ <#B87333>BoltSignatures » <light_green>%arg-2%'s Playerdata reloaded successfully"
+
+        if arg-1 is "config":
+            if arg-2 is "color":
+                if arg-3 is "set":
+                    if arg-4 is set:
+                        if player does not have permission "boltsignatures.sign":
+                            send "<dark_gray>✦ <#B87333>BoltSignatures » <red>You don't have the required permission for that"
+                            stop
+                        else:
+                            set {_color} to arg-4
+                            set yaml value "playerdata.color" from "p-%{_uuid}%" to {_color}
+                            save yaml "p-%{_uuid}%"
+                            send "<dark_gray>✦ <#B87333>BoltSignatures » <light_purple>Your signature color looks like this: <color:%getColor(player)%>%player%"
+
+
+on tab complete of "/boltsignatures", "/bs" and "/bsignatures":
+    if player has permission "boltsignatures.sign":
+        add "config" to {_tab1::*}
+    if player has permission "boltsignatures.admin":
+        add "reload" to {_tab1::*}
+        add "reloadplayer" to {_tab1::*}
+
+    if tab arg-1 = "config":
+        set tab completion for position 2 to "color"
+        if tab arg-2 = "color":
+            set tab completion for position 3 to "set" and "preview"
+            if tab arg-3 = "set":
+                set {_colors::*} to "! use hex or preset below", "black", "dark_blue", "dark_green", "dark_aqua", "dark_red", "dark_purple", "gold", "gray", "dark_gray", "blue", "green", "aqua", "red", "light_purple", "yellow" and "white"
+                set tab completion for position 4 to {_colors::*}
+
+    set tab completion for position 1 to {_tab1::*}
