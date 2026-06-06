@@ -1,12 +1,12 @@
 # BoltSignatures
 
-A Skript pack that lets players sign items with their name and a custom color, leaving a persistent lore entry on the item. Simple, lightweight, no databases.
+A Skript addon that lets players sign items with their name and a custom color, leaving a persistent lore entry on the item. Simple, lightweight, no databases.
 
 ## Features
 
 - Players sign their held item with `/sign`, adding a colored lore entry
 - Per-player signature color, supports named colors and hex codes
-- `multiple-signatures` toggle in config - prevent duplicate signatures or allow stacking
+- `multiple-signatures` toggle in config — prevent duplicate signatures or allow stacking
 - Players can remove their own signature with `/sign remove_self`
 - Admins can wipe all BoltSignatures from an item with `/sign remove_all`
 - Per-UUID playerdata files, loaded on join and unloaded on quit
@@ -15,9 +15,9 @@ A Skript pack that lets players sign items with their name and a custom color, l
 
 ## Dependencies
 
-- [Skript 2.15.3+](https://github.com/SkriptLang/Skript)
-- [skript-yaml 1.7.2+](https://github.com/Sashie/skript-yaml)
-- [SkBee 3.24.0](https://modrinth.com/plugin/skbee/versions)
+- [Skript](https://github.com/SkriptLang/Skript)
+- [skript-yaml](https://github.com/Sashie/skript-yaml)
+- [SkBee](https://github.com/ShaneBeee/SkBee)
 
 ## Installation
 
@@ -54,7 +54,7 @@ Aliases: `/boltsignatures`, `/bsignatures`, `/bs`
 
 ## Colors
 
-Signature colors accept any Minecraft named color (`red`, `gold`, `light_purple`, etc.) or a hex code. The `#` is required when using hex — `#E096FF` works, `E096FF` alone does not. Set yours with:
+Signature colors accept any Minecraft named color (`red`, `gold`, `light_purple`, etc.) or a hex code. The `#` is required when using hex — `#E096FF` works, `E096FF` alone does not. A full list of named colors is available in the [MiniMessage color reference](https://docs.papermc.io/adventure/minimessage/format/#color). Set yours with:
 
 ```
 /bs config color set <color or #hex>
