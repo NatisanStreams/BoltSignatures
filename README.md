@@ -1,6 +1,6 @@
 # BoltSignatures
 
-A Skript addon that lets players sign items with their name and a custom color, leaving a persistent lore entry on the item. Simple, lightweight, no databases.
+A Skript pack that lets players sign items with their name and a custom color, leaving a persistent lore entry on the item. Simple, lightweight, no databases.
 
 ## Features
 
