@@ -1,11 +1,11 @@
 # Functions
 
-function config(value: text) :: object:
-    return yaml value "config.%{_value}%" from "config"
+function signaturesconfig(value: text) :: object:
+    return yaml value "config.%{_value}%" from "signatures-config"
 
 function getColor(p: player) :: object:
     set {_uuid} to {_p}'s uuid
-    return yaml value "playerdata.color" from "p-%{_uuid}%"
+    return yaml value "playerdata.color" from "s-p-%{_uuid}%"
 
 # Config Handler
 
@@ -13,35 +13,35 @@ on load:
     # Main Config
 
     set {config} to "plugins/BoltSignatures/config.yml"
-    load yaml {config} as "config"
-    save yaml "config"
+    load yaml {config} as "signatures-config"
+    save yaml "signatures-config"
 
-    if yaml value "config.multiple-signatures" from "config" is not set:
-        set yaml value "config.multiple-signatures" from "config" to false
-    save yaml "config"
+    if yaml value "config.multiple-signatures" from "signatures-config" is not set:
+        set yaml value "config.multiple-signatures" from "signatures-config" to false
+    save yaml "signatures-config"
 
     # Playerdata
     set {p-default} to "plugins/BoltSignatures/playerdata/default.yml"
-    load yaml {p-default} as "p-default"
-    save yaml "p-default"
+    load yaml {p-default} as "s-p-default"
+    save yaml "s-p-default"
 
-    if yaml value "playerdata.username" from "p-default" is not set:
-        set yaml value "playerdata.username" from "p-default" to "none"
+    if yaml value "playerdata.username" from "s-p-default" is not set:
+        set yaml value "playerdata.username" from "s-p-default" to "none"
     
-    if yaml value "playerdata.uuid" from "p-default" is not set:
-        set yaml value "playerdata.uuid" from "p-default" to "none"
+    if yaml value "playerdata.uuid" from "s-p-default" is not set:
+        set yaml value "playerdata.uuid" from "s-p-default" to "none"
 
-    if yaml value "playerdata.color" from "p-default" is not set:
-        set yaml value "playerdata.color" from "p-default" to "none"
+    if yaml value "playerdata.color" from "s-p-default" is not set:
+        set yaml value "playerdata.color" from "s-p-default" to "none"
 
-    save yaml "p-default"
+    save yaml "s-p-default"
     send "<dark_gray>✦ <#B87333>BoltSignatures » <light_green>Default Playerdata file updated" to console
-    unload yaml "p-default"
+    unload yaml "s-p-default"
 
 
 on unload:
-    save yaml "config"
-    unload yaml "config"
+    save yaml "signatures-config"
+    unload yaml "signatures-config"
 
 # Playerdata Join/Leave Handler
 
@@ -49,31 +49,31 @@ on join:
     set {_uuid} to player's uuid
     set {_path} to "plugins/BoltSignatures/playerdata/%{_uuid}%.yml"
 
-    load yaml {_path} as "p-%{_uuid}%"
-    load yaml {p-default} as "p-default"
+    load yaml {_path} as "s-p-%{_uuid}%"
+    load yaml {p-default} as "s-p-default"
 
-    loop yaml node keys "playerdata" from "p-default":
-        set {_current} to yaml value "%loop-node%" from "p-%{_uuid}%"
+    loop yaml node keys "playerdata" from "s-p-default":
+        set {_current} to yaml value "%loop-node%" from "s-p-%{_uuid}%"
         if {_current} is not set:
-            set {_default} to yaml value "%loop-node%" from "p-default"
-            set yaml value "%loop-node%" from "p-%{_uuid}%" to {_default}
+            set {_default} to yaml value "%loop-node%" from "s-p-default"
+            set yaml value "%loop-node%" from "s-p-%{_uuid}%" to {_default}
 
-    set {_username} to yaml value "playerdata.username" from "p-%{_uuid}%"
+    set {_username} to yaml value "playerdata.username" from "s-p-%{_uuid}%"
     if {_username} is not "%player%":
-        set yaml value "playerdata.username" from "p-%{_uuid}%" to "%player%"
+        set yaml value "playerdata.username" from "s-p-%{_uuid}%" to "%player%"
 
-    set {_fuuid} to yaml value "playerdata.uuid" from "p-%{_uuid}%"
+    set {_fuuid} to yaml value "playerdata.uuid" from "s-p-%{_uuid}%"
     if {_fuuid} is not "%player's uuid%":
-        set yaml value "playerdata.uuid" from "p-%{_uuid}%" to "%player's uuid%"
+        set yaml value "playerdata.uuid" from "s-p-%{_uuid}%" to "%player's uuid%"
 
-    set {_color} to yaml value "playerdata.color" from "p-%{_uuid}%"
+    set {_color} to yaml value "playerdata.color" from "s-p-%{_uuid}%"
     if {_color} is not set:
-        set yaml value "playerdata.color" from "p-%{_uuid}%" to "white"
+        set yaml value "playerdata.color" from "s-p-%{_uuid}%" to "white"
 
-    save yaml "p-%{_uuid}%"
-    unload yaml "p-default"
+    save yaml "s-p-%{_uuid}%"
+    unload yaml "s-p-default"
 
 on quit:
     set {_uuid} to player's uuid
-    save yaml "p-%{_uuid}%"
-    unload yaml "p-%{_uuid}%"
+    save yaml "s-p-%{_uuid}%"
+    unload yaml "s-p-%{_uuid}%"

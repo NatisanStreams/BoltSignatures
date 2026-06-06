@@ -47,8 +47,8 @@ command /boltsignatures [<text>] [<text>] [<text>] [<text>]:
                             stop
                         else:
                             set {_color} to arg-4
-                            set yaml value "playerdata.color" from "p-%{_uuid}%" to {_color}
-                            save yaml "p-%{_uuid}%"
+                            set yaml value "playerdata.color" from "s-p-%{_uuid}%" to {_color}
+                            save yaml "s-p-%{_uuid}%"
                             send "<dark_gray>✦ <#B87333>BoltSignatures » <light_purple>Your signature color looks like this: <color:%getColor(player)%>%player%"
                 if arg-3 is "preview":
                     send "<dark_gray>✦ <#B87333>BoltSignatures » <light_purple>Your signature color looks like this: <color:%getColor(player)%>%player%" to player

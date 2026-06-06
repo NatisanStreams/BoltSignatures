@@ -1,5 +1,5 @@
 function sign(p: player):
-    if config("multiple-signatures") is true:
+    if signaturesconfig("multiple-signatures") is false:
         if the list data value "signed" of held item of {_p} contains name of {_p}:
             send "<dark_gray>✦ <#B87333>BoltSignatures » <red>You have already signed this item" to {_p}
             stop
