@@ -6,7 +6,7 @@ A Skript addon that lets players sign items with their name and a custom color, 
 
 - Players sign their held item with `/sign`, adding a colored lore entry
 - Per-player signature color, supports named colors and hex codes
-- `multiple-signatures` toggle in config — prevent duplicate signatures or allow stacking
+- `multiple-signatures` toggle in config - prevent duplicate signatures or allow stacking
 - Players can remove their own signature with `/sign remove_self`
 - Admins can wipe all BoltSignatures from an item with `/sign remove_all`
 - Per-UUID playerdata files, loaded on join and unloaded on quit
