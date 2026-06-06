@@ -1,7 +1,7 @@
 # Functions
 
 function config(value: text) :: object:
-    return yaml value "%{_value}%" from "config"
+    return yaml value "config.%{_value}%" from "config"
 
 function getColor(p: player) :: object:
     set {_uuid} to {_p}'s uuid
@@ -53,7 +53,7 @@ on join:
     load yaml {p-default} as "p-default"
 
     loop yaml node keys "playerdata" from "p-default":
-        set {_current} to yaml value "%loop-node%" from "p-default"
+        set {_current} to yaml value "%loop-node%" from "p-%{_uuid}%"
         if {_current} is not set:
             set {_default} to yaml value "%loop-node%" from "p-default"
             set yaml value "%loop-node%" from "p-%{_uuid}%" to {_default}

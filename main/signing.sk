@@ -1,0 +1,27 @@
+function sign(p: player):
+    if config("multiple-signatures") is true:
+        if the list data value "signed" of held item of {_p} contains name of {_p}:
+            send "<dark_gray>✦ <#B87333>BoltSignatures » <red>You have already signed this item" to {_p}
+            stop
+        add name of {_p} to the list data value "signed" of held item of {_p}
+
+    set {_uuid} to uuid of {_p}
+    set {_value} to yaml value "playerdata.color" from "p-%{_uuid}%"
+    set {_text} to "<dark_gray>✦ <#B87333>Signed <dark_gray>| <color:%getColor({_p})%>%{_p}%"
+    add {_text} to lore of {_p}'s held item
+
+function debug(p: player):
+    broadcast list data value "signed" of held item of {_p} ? "no"
+
+function remove_all(p: player):
+    delete {_lore::*}
+    loop lore of {_p}'s held item:
+        if loop-value contains "✦":
+            remove loop-value from lore of {_p}'s tool
+            delete list data value "signed" of held item of {_p}
+
+function remove_self(p: player):
+    loop lore of {_p}'s held item:
+        if loop-value is "<dark_gray>✦ <#B87333>Signed <dark_gray>| <color:%getColor({_p})%>%{_p}%":
+            remove loop-value from lore of {_p}'s tool 
+            remove "%name of {_p}%" from the list data value "signed" of held item of {_p}

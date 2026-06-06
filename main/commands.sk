@@ -4,13 +4,18 @@ command /boltsignatures [<text>] [<text>] [<text>] [<text>]:
         set {_uuid} to player's uuid
 
         if arg-1 is "reload":
-            if player has permission "boltsignatures.admin":
+            if player does not have permission "boltsignatures.admin":
+                send "<dark_gray>✦ <#B87333>BoltSignatures » <red>You don't have the required permission for that"
+                stop
+            else:
                 unload yaml "config"
                 load yaml {config} as "config"
                 save yaml "config"
                 if yaml "config" is loaded:
                     send "<dark_gray>✦ <#B87333>BoltSignatures » <light_green>Config Reloaded" to player
                     send "<dark_gray>✦ <#B87333>BoltSignatures » <light_green>Config Reloaded by <light_blue>%player%" to console
+                else:
+                    send "<dark_gray>✦ <#B87333>BoltSignatures » <red>Config failed to reload" to player
         if arg-1 is "reloadplayer":
             if player does not have permission "boltsignatures.admin":
                 send "<dark_gray>✦ <#B87333>BoltSignatures » <red>You don't have the required permission for that"
@@ -33,7 +38,10 @@ command /boltsignatures [<text>] [<text>] [<text>] [<text>]:
         if arg-1 is "config":
             if arg-2 is "color":
                 if arg-3 is "set":
-                    if arg-4 is set:
+                    if arg-4 is not set:
+                        send "<dark_gray>✦ <#B87333>BoltSignatures » <red>Please set a color or #HEX code" to player
+                        stop
+                    else:
                         if player does not have permission "boltsignatures.sign":
                             send "<dark_gray>✦ <#B87333>BoltSignatures » <red>You don't have the required permission for that"
                             stop
@@ -42,6 +50,30 @@ command /boltsignatures [<text>] [<text>] [<text>] [<text>]:
                             set yaml value "playerdata.color" from "p-%{_uuid}%" to {_color}
                             save yaml "p-%{_uuid}%"
                             send "<dark_gray>✦ <#B87333>BoltSignatures » <light_purple>Your signature color looks like this: <color:%getColor(player)%>%player%"
+                if arg-3 is "preview":
+                    send "<dark_gray>✦ <#B87333>BoltSignatures » <light_purple>Your signature color looks like this: <color:%getColor(player)%>%player%" to player
+
+command /sign [<text>]:
+    permission: boltsignatures.sign
+    permission message: <dark_gray>✦ <##B87333>BoltSignatures » <red>You don't have the required permission for that
+    trigger:
+        if arg-1 is not set:
+            sign(player)
+        if arg-1 is "remove_self":
+            remove_self(player)
+        if arg-1 is "remove_all":
+            if player does not have permission "boltsignatures.admin":
+                send "<dark_gray>✦ <#B87333>BoltSignatures » <red>You don't have the required permission for that"
+                stop
+            remove_all(player)
+
+on tab complete of "/sign":
+    if player has permission "boltsignatures.sign":
+        add "remove_self" to {_tab1::*}
+    if player has permission "boltsignatures.admin":
+        add "remove_all" to {_tab1::*}
+
+    set tab completion for position 1 to {_tab1::*}
 
 
 on tab complete of "/boltsignatures", "/bs" and "/bsignatures":
@@ -52,11 +84,15 @@ on tab complete of "/boltsignatures", "/bs" and "/bsignatures":
         add "reloadplayer" to {_tab1::*}
 
     if tab arg-1 = "config":
-        set tab completion for position 2 to "color"
-        if tab arg-2 = "color":
-            set tab completion for position 3 to "set" and "preview"
-            if tab arg-3 = "set":
-                set {_colors::*} to "! use hex or preset below", "black", "dark_blue", "dark_green", "dark_aqua", "dark_red", "dark_purple", "gold", "gray", "dark_gray", "blue", "green", "aqua", "red", "light_purple", "yellow" and "white"
-                set tab completion for position 4 to {_colors::*}
+        if player has permission "boltsignatures.sign":
+            set tab completion for position 2 to "color"
+            if tab arg-2 = "color":
+                if player has permission "boltsignatures.sign":
+                    set tab completion for position 3 to "set" and "preview"
+                    if tab arg-3 = "set":
+                        if player has permission "boltsignatures.sign":
+                            set {_colors::*} to "! use hex or preset below", "black", "dark_blue", "dark_green", "dark_aqua", "dark_red", "dark_purple", "gold", "gray", "dark_gray", "blue", "green", "aqua", "red", "light_purple", "yellow" and "white"
+                            set tab completion for position 4 to {_colors::*}
+
 
     set tab completion for position 1 to {_tab1::*}
