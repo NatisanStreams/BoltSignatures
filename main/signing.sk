@@ -6,7 +6,7 @@ function sign(p: player):
         add name of {_p} to the list data value "signed" of held item of {_p}
 
     set {_uuid} to uuid of {_p}
-    set {_value} to yaml value "playerdata.color" from "p-%{_uuid}%"
+    set {_value} to yaml value "playerdata.color" from "s-p-%{_uuid}%"
     set {_text} to "<dark_gray>✦ <#B87333>Signed <dark_gray>| <color:%getColor({_p})%>%{_p}%"
     add {_text} to lore of {_p}'s held item
 
@@ -16,7 +16,7 @@ function debug(p: player):
 function remove_all(p: player):
     delete {_lore::*}
     loop lore of {_p}'s held item:
-        if loop-value contains "✦":
+        if loop-value contains "<dark_gray>✦ <#B87333>Signed":
             remove loop-value from lore of {_p}'s tool
             delete list data value "signed" of held item of {_p}
 

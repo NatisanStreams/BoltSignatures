@@ -8,10 +8,10 @@ command /boltsignatures [<text>] [<text>] [<text>] [<text>]:
                 send "<dark_gray>✦ <#B87333>BoltSignatures » <red>You don't have the required permission for that"
                 stop
             else:
-                unload yaml "config"
-                load yaml {config} as "config"
-                save yaml "config"
-                if yaml "config" is loaded:
+                unload yaml "signatures-config"
+                load yaml {config} as "signatures-config"
+                save yaml "signatures-config"
+                if yaml "signatures-config" is loaded:
                     send "<dark_gray>✦ <#B87333>BoltSignatures » <light_green>Config Reloaded" to player
                     send "<dark_gray>✦ <#B87333>BoltSignatures » <light_green>Config Reloaded by <light_blue>%player%" to console
                 else:
@@ -30,9 +30,9 @@ command /boltsignatures [<text>] [<text>] [<text>] [<text>]:
                     stop
 
                 set {_uuid} to {_player}'s uuid
-                unload yaml "p-%{_uuid}%"
-                load yaml "plugins/BoltSignatures/playerdata/%{_uuid}%.yml" as "p-%{_uuid}%"
-                save yaml "p-%{_uuid}%"
+                unload yaml "s-p-%{_uuid}%"
+                load yaml "plugins/BoltSignatures/playerdata/%{_uuid}%.yml" as "s-p-%{_uuid}%"
+                save yaml "s-p-%{_uuid}%"
                 send "<dark_gray>✦ <#B87333>BoltSignatures » <light_green>%arg-2%'s Playerdata reloaded successfully"
 
         if arg-1 is "config":
