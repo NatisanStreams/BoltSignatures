@@ -1,6 +1,6 @@
 # BoltSignatures
 
-A Skript addon that lets players sign items with their name and a custom color, leaving a persistent lore entry on the item. Simple, lightweight, no databases.
+A Skript pack that lets players sign items with their name and a custom color, leaving a persistent lore entry on the item. Simple, lightweight, no databases.
 
 ## Features
 
@@ -15,9 +15,9 @@ A Skript addon that lets players sign items with their name and a custom color, 
 
 ## Dependencies
 
-- [Skript](https://github.com/SkriptLang/Skript)
-- [skript-yaml](https://github.com/Sashie/skript-yaml)
-- [SkBee](https://github.com/ShaneBeee/SkBee)
+- [Skript 2.15.3+](https://github.com/SkriptLang/Skript)
+- [skript-yaml 1.7.2+](https://github.com/Sashie/skript-yaml)
+- [SkBee 3.24.0+](https://modrinth.com/plugin/skbee/versions)
 
 ## Installation
 
