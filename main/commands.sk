@@ -91,8 +91,11 @@ on tab complete of "/boltsignatures", "/bs" and "/bsignatures":
                     set tab completion for position 3 to "set" and "preview"
                     if tab arg-3 = "set":
                         if player has permission "boltsignatures.sign":
-                            set {_colors::*} to "! use hex or preset below", "black", "dark_blue", "dark_green", "dark_aqua", "dark_red", "dark_purple", "gold", "gray", "dark_gray", "blue", "green", "aqua", "red", "light_purple", "yellow" and "white"
+                            set {_colors::*} to "! use #HEX or preset below", "black", "dark_blue", "dark_green", "dark_aqua", "dark_red", "dark_purple", "gold", "gray", "dark_gray", "blue", "green", "aqua", "red", "light_purple", "yellow" and "white"
                             set tab completion for position 4 to {_colors::*}
+    if tab arg-1 = "reloadplayer":
+        if player has permission "botlsignatures.admin":
+            set tab completion for position 2 to all players
 
 
     set tab completion for position 1 to {_tab1::*}

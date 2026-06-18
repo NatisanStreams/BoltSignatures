@@ -10,9 +10,6 @@ function sign(p: player):
     set {_text} to "<dark_gray>✦ <#B87333>Signed <dark_gray>| <color:%getColor({_p})%>%{_p}%"
     add {_text} to lore of {_p}'s held item
 
-function debug(p: player):
-    broadcast list data value "signed" of held item of {_p} ? "no"
-
 function remove_all(p: player):
     delete {_lore::*}
     loop lore of {_p}'s held item:

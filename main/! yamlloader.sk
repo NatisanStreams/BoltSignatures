@@ -70,6 +70,9 @@ on join:
     if {_color} is not set:
         set yaml value "playerdata.color" from "s-p-%{_uuid}%" to "white"
 
+    if {_color} is "none":
+        set yaml value "playerdata.color" from "s-p-%{_uuid}%" to "white"
+
     save yaml "s-p-%{_uuid}%"
     unload yaml "s-p-default"
 
