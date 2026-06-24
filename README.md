@@ -31,6 +31,16 @@ A Skript pack that lets players sign items with their name and a custom color, l
 |-----|---------|-------------|
 | `config.multiple-signatures` | `false` | Allow the same player to sign an item more than once |
 
+## Incompatibility Warning
+
+This Skript is **partially** incompatible with **Nexo**, this is due to their Creative Mode Packet Interception
+To disable, follow these steps:
+
+1. Open the `plugins/Nexo/settings.yml` file
+2. Locate `items` under the `Formatting:` section
+3. Ensure that `items` is **false**
+4. Restart your server
+
 ## Commands
 
 | Command | Description |
